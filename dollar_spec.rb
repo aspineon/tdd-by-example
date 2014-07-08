@@ -3,10 +3,8 @@ require_relative 'dollar'
 describe Dollar do
   it 'multiplied by number' do
     five = Dollar.new 5
-    product = five.times 2
-    expect( product.amount ).to eq 10
-    product = five.times 3
-    expect( product.amount ).to eq 15
+    expect( five.times 2 ).to eq Dollar.new 10
+    expect( five.times 3 ).to eq Dollar.new 15
   end
 
   it 'equals by amount' do
