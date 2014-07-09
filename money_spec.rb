@@ -1,6 +1,6 @@
-require_relative 'franc'
+require_relative 'money'
 
-describe Franc do
+describe Money do
   it 'multiplied by number' do
     five = Money.franc 5
     expect( five.times 2 ).to eq Money.franc 10
@@ -10,7 +10,7 @@ describe Franc do
   it 'equals by amount' do
     expect( Money.franc 5 ).to eq Money.franc 5
     expect( Money.franc 5 ).not_to eq Money.franc 6
-    expect( Franc.new 5, 'CHF' ).to eq Money.new 5, 'CHF'
+    expect( Money.dollar 5 ).not_to eq Money.franc 5
   end
 
   it 'has currency' do
