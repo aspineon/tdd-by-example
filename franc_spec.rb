@@ -10,6 +10,7 @@ describe Franc do
   it 'equals by amount' do
     expect( Money.franc 5 ).to eq Money.franc 5
     expect( Money.franc 5 ).not_to eq Money.franc 6
+    expect( Franc.new 5, 'CHF' ).to eq Money.new 5, 'CHF'
   end
 
   it 'has currency' do

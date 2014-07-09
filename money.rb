@@ -8,7 +8,11 @@ class Money
 
   def == money
     @amount == money.amount &&
-      self.class == money.class
+      currency == money.currency
+  end
+
+  def times multiplier
+    Money.new @amount * multiplier, currency
   end
 
   def self.dollar amount
@@ -17,6 +21,10 @@ class Money
 
   def self.franc amount
     Franc.new amount, 'CHF'
+  end
+
+  def inspect
+    "#{amount.to_s} #{currency}"
   end
 
   protected
