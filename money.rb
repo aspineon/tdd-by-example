@@ -15,6 +15,10 @@ class Money
     Money.new @amount * multiplier, currency
   end
 
+  def plus added
+    Money.new @amount + added.amount, currency
+  end
+
   def self.dollar amount
     Money.new amount, 'USD'
   end

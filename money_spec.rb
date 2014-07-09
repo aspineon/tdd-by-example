@@ -1,10 +1,19 @@
 require_relative 'money'
+require_relative 'bank'
 
 describe Money do
   it 'multiplied by number' do
     five = Money.franc 5
     expect( five.times 2 ).to eq Money.franc 10
     expect( five.times 3 ).to eq Money.franc 15
+  end
+
+  it 'sum money' do
+    five = Money.dollar 5
+    sum = five.plus five
+    bank = Bank.new
+    reduced = bank.reduce( sum, 'USD' )
+    expect( reduced ).to eq Money.dollar 10
   end
 
   it 'equals by amount' do
