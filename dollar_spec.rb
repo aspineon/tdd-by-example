@@ -10,5 +10,6 @@ describe Dollar do
   it 'equals by amount' do
     expect( Dollar.new 5 ).to eq Dollar.new 5
     expect( Dollar.new 5 ).not_to eq Dollar.new 6
+    expect( Dollar.new 5 ).not_to eq Franc.new 5
   end
 end
