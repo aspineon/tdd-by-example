@@ -11,4 +11,8 @@ describe Franc do
     expect( Money.franc 5 ).to eq Money.franc 5
     expect( Money.franc 5 ).not_to eq Money.franc 6
   end
+
+  it 'has currency' do
+    expect( Money.franc( 1 ).currency ).to eq 'CHF'
+  end
 end

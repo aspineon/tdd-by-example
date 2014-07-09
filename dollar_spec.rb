@@ -12,4 +12,8 @@ describe Dollar do
     expect( Money.dollar 5 ).not_to eq Money.dollar 6
     expect( Money.dollar 5 ).not_to eq Money.franc 5
   end
+
+  it 'has currency' do
+    expect( Money.dollar( 1 ).currency ).to eq 'USD'
+  end
 end

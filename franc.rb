@@ -1,12 +1,11 @@
 require_relative 'money'
 
 class Franc < Money
-
-  def initialize amount
-    @amount = amount
+  def initialize amount, currency
+    super
   end
 
   def times multiplier
-    Franc.new @amount * multiplier
+    Money.franc @amount * multiplier
   end
 end
