@@ -1,5 +1,5 @@
 class Bank
-  def reduce money, currency
-    Money.dollar 10
+  def reduce expression: nil, currency: nil
+    expression.reduce currency
   end
 end

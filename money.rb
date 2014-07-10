@@ -1,5 +1,7 @@
+require_relative 'sum'
+
 class Money
-  attr_reader :currency
+  attr_reader :currency, :amount
 
   def initialize amount, currency
     @amount = amount
@@ -15,8 +17,12 @@ class Money
     Money.new @amount * multiplier, currency
   end
 
-  def plus added
-    Money.new @amount + added.amount, currency
+  def plus addend
+    Sum.new self, addend
+  end
+
+  def reduce currency
+    self
   end
 
   def self.dollar amount
@@ -30,7 +36,4 @@ class Money
   def inspect
     "#{amount.to_s} #{currency}"
   end
-
-  protected
-  attr_reader :amount
 end

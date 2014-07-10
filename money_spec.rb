@@ -12,8 +12,15 @@ describe Money do
     five = Money.dollar 5
     sum = five.plus five
     bank = Bank.new
-    reduced = bank.reduce( sum, 'USD' )
+    reduced = bank.reduce expression: sum, currency: 'USD'
     expect( reduced ).to eq Money.dollar 10
+  end
+
+  it 'plus gives sum' do
+    five = Money.dollar 5
+    sum = five.plus five
+    expect( sum.augend ).to eq five
+    expect( sum.addend ).to eq five
   end
 
   it 'equals by amount' do
