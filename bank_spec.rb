@@ -14,4 +14,15 @@ describe Bank do
     result = bank.reduce expression: Money.dollar( 1 ), currency: 'USD'
     expect( result ).to eq Money.dollar 1
   end
+
+  it 'reduce money with different currency' do
+    bank = Bank.new
+    bank.addRate 'CHF', 'USD', 2
+    result = bank.reduce expression: Money.franc( 2 ), currency: 'USD'
+    expect( result ).to eq Money.dollar 1
+  end
+
+  it 'has identity rate of 1' do
+    expect( Bank.new.rate( 'USD', 'USD' ) ).to eq 1
+  end
 end

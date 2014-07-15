@@ -6,7 +6,7 @@ class Sum
    @addend = addend
  end
 
- def reduce currency
-   Money.new augend.amount + addend.amount, currency
+ def reduce bank: nil, to: nil
+   Money.new augend.amount + addend.amount, to
  end
 end

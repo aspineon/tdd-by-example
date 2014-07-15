@@ -21,8 +21,9 @@ class Money
     Sum.new self, addend
   end
 
-  def reduce currency
-    self
+  def reduce bank: nil, to: nil
+    rate = bank.rate @currency, to
+    Money.new @amount / rate, to
   end
 
   def self.dollar amount
