@@ -8,6 +8,15 @@ describe Money do
     expect( five.times 3 ).to eq Money.franc 15
   end
 
+  it 'sum multi-currency' do
+    fiveBucks = Money.dollar 5
+    tenFrancs = Money.franc 10
+    bank = Bank.new
+    bank.addRate 'CHF', 'USD', 2
+    result = bank.reduce expression: fiveBucks.plus( tenFrancs ), currency: 'USD'
+    expect( result ).to eq Money.dollar 10
+  end
+
   it 'sum money' do
     five = Money.dollar 5
     sum = five.plus five
