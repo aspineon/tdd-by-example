@@ -1,0 +1,1 @@
+rspec -c *_spec.rb && say green || say red
