@@ -20,9 +20,9 @@ class TestCaseTest(TestCase):
     assert(
             (
               "Traceback (most recent call last):\n"
-              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 18, in run\n"
+              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 21, in run\n"
               "    method()\n"
-              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 69, in testBrokenMethod\n"
+              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 79, in testBrokenMethod\n"
               "    raise Exception\n"
               "Exception\n"
               "1 run, 1 failed"
@@ -50,6 +50,15 @@ class TestCaseTest(TestCase):
   def startTest(self):
     self.count= self.count + 1
 
+  def testFailedSetUp(self):
+    test= BrokenSetUp("testMethod")
+    test.run(self.result)
+    assert("No tests were run, setUp() failed" == self.result.summary())
+
+  def testFailedSetUpFormatting(self):
+    self.result.setUpFailed()
+    assert("No tests were run, setUp() failed" == self.result.summary())
+
 suite= TestSuite()
 suite.add(TestCaseTest("testTemplateMethod"))
 suite.add(TestCaseTest("testResult"))
@@ -57,6 +66,8 @@ suite.add(TestCaseTest("testFailedResult"))
 suite.add(TestCaseTest("testFailedResultFormatting"))
 suite.add(TestCaseTest("testSuite"))
 suite.add(TestCaseTest("testNotification"))
+suite.add(TestCaseTest("testFailedSetUp"))
+suite.add(TestCaseTest("testFailedSetUpFormatting"))
 result= TestResult()
 suite.run(result)
 print result.summary()

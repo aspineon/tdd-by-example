@@ -12,7 +12,10 @@ class TestCase:
 
     def run(self, result):
       result.testStarted()
-      self.setUp()
+      try:
+        self.setUp()
+      except:
+        result.setUpFailed()
       try:
         method = getattr(self, self.name)
         method()
@@ -38,6 +41,10 @@ class TestResult:
       self.errorCount= 0
       self.errorLog= ""
       self.listeners= []
+      self.setUpFail= False
+
+    def setUpFailed(self):
+      self.setUpFail= True
 
     def testStarted(self):
       self.runCount= self.runCount + 1
@@ -49,7 +56,10 @@ class TestResult:
       self.errorLog= self.errorLog + errorMessage
 
     def summary(self):
-      return "%s%d run, %d failed" % (self.errorLog, self.runCount, self.errorCount)
+      if self.setUpFail:
+        return "No tests were run, setUp() failed"
+      else:
+        return "%s%d run, %d failed" % (self.errorLog, self.runCount, self.errorCount)
 
     def addListener(self, newListener):
      self.listeners.append(newListener)
@@ -70,3 +80,7 @@ class WasRun(TestCase):
 
   def tearDown(self):
       self.log= self.log + "tearDown "
+
+class BrokenSetUp(TestCase):
+  def setUp(self):
+      raise Exception
