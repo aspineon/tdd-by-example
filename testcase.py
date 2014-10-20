@@ -10,8 +10,7 @@ class TestCase:
     def tearDown(self):
       pass
 
-    def run(self):
-      result= TestResult()
+    def run(self, result):
       result.testStarted()
       self.setUp()
       try:
@@ -21,6 +20,17 @@ class TestCase:
         result.testFailed(traceback.format_exc())
       self.tearDown()
       return result
+
+class TestSuite:
+  def __init__(self):
+    self.tests= []
+
+  def add(self, test):
+    self.tests.append(test)
+
+  def run(self, result):
+    for test in self.tests:
+      test.run(result)
 
 class TestResult:
     def __init__(self):
