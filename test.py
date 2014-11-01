@@ -22,7 +22,7 @@ class TestCaseTest(TestCase):
               "Traceback (most recent call last):\n"
               "  File \"/Users/rain/tdd-by-example/testcase.py\", line 18, in run\n"
               "    method()\n"
-              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 63, in testBrokenMethod\n"
+              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 69, in testBrokenMethod\n"
               "    raise Exception\n"
               "Exception\n"
               "1 run, 1 failed"
@@ -41,12 +41,22 @@ class TestCaseTest(TestCase):
     suite.run(self.result)
     assert("2 run, 1 failed" == self.result.summary().splitlines()[-1])
 
+  def testNotification(self):
+    self.count= 0
+    self.result.addListener(self)
+    WasRun("testNotification").run(self.result)
+    assert(1 == self.count)
+
+  def startTest(self):
+    self.count= self.count + 1
+
 suite= TestSuite()
 suite.add(TestCaseTest("testTemplateMethod"))
 suite.add(TestCaseTest("testResult"))
 suite.add(TestCaseTest("testFailedResult"))
 suite.add(TestCaseTest("testFailedResultFormatting"))
 suite.add(TestCaseTest("testSuite"))
+suite.add(TestCaseTest("testNotification"))
 result= TestResult()
 suite.run(result)
 print result.summary()

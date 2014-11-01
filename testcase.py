@@ -37,9 +37,12 @@ class TestResult:
       self.runCount= 0
       self.errorCount= 0
       self.errorLog= ""
+      self.listeners= []
 
     def testStarted(self):
       self.runCount= self.runCount + 1
+      for listener in self.listeners:
+        listener.startTest()
 
     def testFailed(self, errorMessage):
       self.errorCount= self.errorCount + 1
@@ -47,6 +50,9 @@ class TestResult:
 
     def summary(self):
       return "%s%d run, %d failed" % (self.errorLog, self.runCount, self.errorCount)
+
+    def addListener(self, newListener):
+     self.listeners.append(newListener)
 
 class WasRun(TestCase):
   def __init__(self, name):
