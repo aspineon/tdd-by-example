@@ -41,15 +41,7 @@ class TestResult:
       self.errorCount= 0
       self.errorLog= ""
       self.listeners= []
-      self.setUpFail= False
-
-    def setUpFailed(self):
-      self.setUpFail= True
-
-    def testStarted(self):
-      self.runCount= self.runCount + 1
-      for listener in self.listeners:
-        listener.startTest()
+      self.setUpFailure= None
 
     def traceback(func):
         def inner(self):
@@ -58,13 +50,22 @@ class TestResult:
         return inner
 
     @traceback
+    def setUpFailed(self):
+      self.setUpFailure= self.traceback
+
+    def testStarted(self):
+      self.runCount= self.runCount + 1
+      for listener in self.listeners:
+        listener.startTest()
+
+    @traceback
     def testFailed(self):
       self.errorCount= self.errorCount + 1
       self.errorLog= self.errorLog + self.traceback
 
     def summary(self):
-      if self.setUpFail:
-        return "No tests were run, setUp() failed"
+      if self.setUpFailure:
+        return "%sNo tests were run, setUp() failed" % self.setUpFailure
       else:
         return "%s%d run, %d failed" % (self.errorLog, self.runCount, self.errorCount)
 

@@ -22,7 +22,7 @@ class TestCaseTest(TestCase):
               "Traceback (most recent call last):\n"
               "  File \"/Users/rain/tdd-by-example/testcase.py\", line 21, in run\n"
               "    method()\n"
-              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 86, in testBrokenMethod\n"
+              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 87, in testBrokenMethod\n"
               "    raise Exception\n"
               "Exception\n"
               "1 run, 1 failed"
@@ -58,11 +58,26 @@ class TestCaseTest(TestCase):
   def testFailedSetUp(self):
     test= BrokenSetUp("testMethod")
     test.run(self.result)
-    assert("No tests were run, setUp() failed" == self.result.summary())
+    assert(
+            (
+              "Traceback (most recent call last):\n"
+              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 16, in run\n"
+              "    self.setUp()\n"
+              "  File \"/Users/rain/tdd-by-example/testcase.py\", line 94, in setUp\n"
+              "    raise Exception\n"
+              "Exception\n"
+              "No tests were run, setUp() failed"
+            ) == self.result.summary()
+          )
 
   def testFailedSetUpFormatting(self):
+    format_exc = traceback.format_exc
+    def trace():
+        return "Exception, "
+    traceback.format_exc = trace
     self.result.setUpFailed()
-    assert("No tests were run, setUp() failed" == self.result.summary())
+    traceback.format_exc = format_exc
+    assert("Exception, No tests were run, setUp() failed" == self.result.summary())
 
 suite= TestSuite()
 suite.add(TestCaseTest("testTemplateMethod"))
