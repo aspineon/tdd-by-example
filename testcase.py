@@ -20,7 +20,7 @@ class TestCase:
         method = getattr(self, self.name)
         method()
       except:
-        result.testFailed(traceback.format_exc())
+        result.testFailed()
       self.tearDown()
       return result
 
@@ -51,9 +51,16 @@ class TestResult:
       for listener in self.listeners:
         listener.startTest()
 
-    def testFailed(self, errorMessage):
+    def traceback(func):
+        def inner(self):
+          self.traceback = traceback.format_exc()
+          func(self)
+        return inner
+
+    @traceback
+    def testFailed(self):
       self.errorCount= self.errorCount + 1
-      self.errorLog= self.errorLog + errorMessage
+      self.errorLog= self.errorLog + self.traceback
 
     def summary(self):
       if self.setUpFail:
